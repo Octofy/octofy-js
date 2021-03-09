@@ -1,0 +1,18 @@
+{
+  "name": "octofy-js",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --watch --project tsconfig.json"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.32",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {}
+}
