@@ -1,9 +1,9 @@
-declare module '@octofy/octofy-js' {
-  interface Octofy {
-    enable(): string
-  }
+/// <reference path="./octofy-js/index.d.ts" />
 
-  interface OctofyConstructor {
-    (key: string): Octofy
-  }
+declare module '@octofy/octofy-js' {
+  const loadOctofy: (key: string) => Promise<Octofy | null>
+}
+
+interface Window {
+  Octofy?: import('@octofy/octofy-js').OctofyConstructor
 }

@@ -1,8 +1,6 @@
 ///<reference path='../types/index.d.ts' />
 import { Octofy, OctofyConstructor } from '@octofy/octofy-js'
 
-declare global { interface Window { Octofy: OctofyConstructor } }
-
 export type LoadOctofy = (
   ...args: Parameters<OctofyConstructor>
 ) => Promise<Octofy | null>
