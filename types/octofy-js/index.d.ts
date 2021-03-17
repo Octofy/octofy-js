@@ -1,9 +1,26 @@
-declare module '@octofy/octofy-js' {
+declare module "@octofy/octofy-js" {
   interface Octofy {
-    enable(): string
+    variation(
+      featureKey: string,
+      targetGroupKey: string,
+      targetKey: string
+    ): Promise<string | boolean>;
+    addGroup(
+      groupKey: string,
+      targetKey: string,
+      options?: GroupOptions
+    ): Promise<any>;
   }
 
   interface OctofyConstructor {
-    (key: string): Octofy
+    (key: string): Octofy;
   }
+}
+
+interface GroupOptions {
+  $name?: string;
+  $email?: string;
+  $avatar?: string;
+  $firstName?: string;
+  $lastName?: string;
 }
