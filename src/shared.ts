@@ -1,9 +1,9 @@
 ///<reference path='../types/index.d.ts' />
-import { Octofy, OctofyConstructor } from '@octofy/octofy-js'
+import { Octofy, OctofyConstructor } from "@octofy/octofy-js";
 
 export type LoadOctofy = (
   ...args: Parameters<OctofyConstructor>
-) => Promise<Octofy | null>
+) => Promise<Octofy | null>;
 
 export interface LoadParams {
   debug: boolean;
@@ -15,56 +15,58 @@ export const initOctofy = (
 ): Octofy | null => {
   if (maybe === null) return null;
 
-  const octofy = maybe.apply(undefined, args)
-  return octofy
-}
+  const octofy = maybe.apply(undefined, args);
+  return octofy;
+};
 
-let octofyPromise: Promise<OctofyConstructor | null> | null = null
+let octofyPromise: Promise<OctofyConstructor | null> | null = null;
 
 export const loadScript = (
   params: null | LoadParams
 ): Promise<OctofyConstructor | null> => {
-  if (octofyPromise !== null) return octofyPromise
+  if (octofyPromise !== null) return octofyPromise;
 
   octofyPromise = new Promise((resolve, reject) => {
-    if (typeof window === 'undefined') {
-      resolve(null)
-      return
+    if (typeof window === "undefined") {
+      resolve(null);
+      return;
     }
 
     if (window.Octofy) {
-      resolve(window.Octofy)
-      return
+      resolve(window.Octofy);
+      return;
     }
 
     // if nothing script process here...
     try {
-      let script = findScript()
-      if (!script) script = injectScript()
+      let script = findScript();
+      if (!script) script = injectScript();
 
-      script.addEventListener('load', () => {
-        if (window.Octofy) resolve(window.Octofy)
-        reject(new Error('Octofy.js not available.'))
-      })
+      script.addEventListener("load", () => {
+        if (window.Octofy) resolve(window.Octofy);
+        reject(new Error("Octofy.js not available."));
+      });
 
-      script.addEventListener('error', () => {
-        reject(new Error('Failed to load Octofy.js'))
-      })
+      script.addEventListener("error", () => {
+        reject(new Error("Failed to load Octofy.js"));
+      });
     } catch (error) {
-      reject(error)
-      return
+      reject(error);
+      return;
     }
-  })
+  });
 
   return octofyPromise;
-}
+};
 
 // TODO ドメイン決まり次第変える
-const V3_URL = 'https://js.stripe.com/v3';
+const V3_URL = "https://js.stripe.com/v3";
 const V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
 
 const findScript = (): HTMLScriptElement | null => {
-  const scripts = document.querySelectorAll<HTMLScriptElement>(`script[src^="${V3_URL}"]`)
+  const scripts = document.querySelectorAll<HTMLScriptElement>(
+    `script[src^="${V3_URL}"]`
+  );
 
   for (let i = 0; i < scripts.length; i++) {
     const script = scripts[i];
@@ -77,19 +79,19 @@ const findScript = (): HTMLScriptElement | null => {
   }
 
   return null;
-}
+};
 const injectScript = (): HTMLScriptElement => {
-  const script = document.createElement('script')
-  script.src = `${V3_URL}`
+  const script = document.createElement("script");
+  script.src = `${V3_URL}`;
 
-  const headOrBody = document.head || document.body
+  const headOrBody = document.head || document.body;
 
   if (!headOrBody) {
     throw new Error(
-      'Expected document.body not to be null. Octofy.js requires a <body> element.'
+      "Expected document.body not to be null. Octofy.js requires a <body> element."
     );
   }
 
-  headOrBody.appendChild(script)
-  return script
-}
+  headOrBody.appendChild(script);
+  return script;
+};
