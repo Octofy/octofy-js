@@ -1,10 +1,6 @@
 declare module "@octofy/octofy-js" {
   interface Octofy {
-    variation(
-      featureKey: string,
-      targetGroupKey: string,
-      targetKey: string
-    ): Promise<string | boolean>;
+    variation(featureKey: string, targetKey: string): Promise<string | boolean>;
     addGroup(
       groupKey: string,
       targetKey: string,
