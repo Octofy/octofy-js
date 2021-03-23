@@ -5,7 +5,7 @@ declare module "@octofy/octofy-js" {
       targetKey: string,
       defaultValue?: any
     ): Promise<string | boolean | undefined>;
-    addGroup(
+    register(
       groupKey: string,
       targetKey: string,
       options?: GroupOptions
