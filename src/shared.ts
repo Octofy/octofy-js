@@ -59,19 +59,18 @@ export const loadScript = (
   return octofyPromise;
 };
 
-// TODO ドメイン決まり次第変える
-const V3_URL = "https://js.stripe.com/v3";
-const V3_URL_REGEX = /^https:\/\/js\.stripe\.com\/v3\/?(\?.*)?$/;
+const V1_URL = "https://js.octofy.dev/v1";
+const V1_URL_REGEX = /^https:\/\/js\.octofy\.dev\/v1\/?(\?.*)?$/;
 
 const findScript = (): HTMLScriptElement | null => {
   const scripts = document.querySelectorAll<HTMLScriptElement>(
-    `script[src^="${V3_URL}"]`
+    `script[src^="${V1_URL}"]`
   );
 
   for (let i = 0; i < scripts.length; i++) {
     const script = scripts[i];
 
-    if (!V3_URL_REGEX.test(script.src)) {
+    if (!V1_URL_REGEX.test(script.src)) {
       continue;
     }
 
@@ -82,7 +81,7 @@ const findScript = (): HTMLScriptElement | null => {
 };
 const injectScript = (): HTMLScriptElement => {
   const script = document.createElement("script");
-  script.src = `${V3_URL}`;
+  script.src = `${V1_URL}`;
 
   const headOrBody = document.head || document.body;
 
