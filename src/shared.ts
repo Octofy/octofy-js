@@ -37,7 +37,6 @@ export const loadScript = (
       return;
     }
 
-    // if nothing script process here...
     try {
       let script = findScript();
       if (!script) script = injectScript();
